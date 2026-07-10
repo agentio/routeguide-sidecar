@@ -1,0 +1,37 @@
+name: Build and Push with Podman
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  podman-build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+    
+    - name: Checkout repository
+      uses: actions/checkout@v6
+
+    - name: Log in to GitHub Container Registry
+      uses: redhat-actions/podman-login@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build container image
+      run: |
+        podman build \
+          --platform linux/amd64,linux/arm64 \
+          --manifest ghcr.io/${{ github.repository }}:latest \
+          .
+
+    - name: Push image to registry
+      run: |
+        podman manifest push ghcr.io/${{ github.repository }}:latest

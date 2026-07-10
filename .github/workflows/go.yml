@@ -1,0 +1,34 @@
+name: Go
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # each 12:00 UTC
+  push:
+    branches: [ main ]
+    tags: [ 'v*.*.*' ] # semver release
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v6
+
+    - name: Fetch protoc
+      run: |
+        source tools/fetch-protoc.sh
+        echo "$HOME/local/bin" >> "$GITHUB_PATH"
+
+    - name: Set up Go
+      uses: actions/setup-go@v6
+      with:
+        go-version: '1.26'
+
+    - name: Build
+      run: make all
+
+    - name: Test
+      run: make test
