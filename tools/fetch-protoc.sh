@@ -9,7 +9,7 @@ case "$(arch)" in
   ;;
 esac
 
-PROTOC_VERSION='31.1'
+PROTOC_VERSION='35.1'
 
 export SOURCE="https://github.com/protocolbuffers/protobuf/releases/download/v$PROTOC_VERSION/protoc-$PROTOC_VERSION-linux-$ARCH.zip"
 

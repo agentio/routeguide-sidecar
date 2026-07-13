@@ -1,6 +1,6 @@
 module github.com/agentio/routeguide-sidecar
 
-go 1.25.8
+go 1.26
 
 require (
 	github.com/agentio/sidecar v0.2.0
