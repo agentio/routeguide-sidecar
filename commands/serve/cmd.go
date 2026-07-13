@@ -16,8 +16,9 @@ func Cmd() *cobra.Command {
 	var verbose bool
 	var data string
 	cmd := &cobra.Command{
-		Use:  "serve",
-		Args: cobra.NoArgs,
+		Use:   "serve",
+		Short: "Run the routeguide server",
+		Args:  cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			apiServer := routeguide.NewServer(data)
 			httpServer := sidecar.NewServer(apiServer.ServeMux())

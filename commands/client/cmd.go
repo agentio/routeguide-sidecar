@@ -12,8 +12,9 @@ func Cmd() *cobra.Command {
 	var insecure bool
 	var headers []string
 	cmd := &cobra.Command{
-		Use:  "client",
-		Args: cobra.NoArgs,
+		Use:   "client",
+		Short: "Run the routeguide test client",
+		Args:  cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			client := sidecar.NewClient(sidecar.ClientOptions{Address: address, Insecure: insecure, Headers: headers})
 			// Unary: Looking for a valid feature

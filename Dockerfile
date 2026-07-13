@@ -9,5 +9,6 @@ RUN make rpc
 RUN CGO_ENABLED=0 GOOS=linux go build -v -o routeguide-sidecar .
 
 FROM gcr.io/distroless/static-debian13
-COPY --from=builder /app/routeguide-sidecar /usr/local/bin/routeguide-sidecar
-CMD ["/usr/local/bin/routeguide-sidecar", "serve", "-p", "8080"]
+COPY --from=builder /app/routeguide-sidecar /usr/bin/routeguide-sidecar
+ENTRYPOINT [ "/usr/bin/routeguide-sidecar" ]
+CMD ["serve", "-p", "8080"]
