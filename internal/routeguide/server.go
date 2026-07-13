@@ -16,12 +16,14 @@ type Server struct {
 	savedFeatures []*routeguidepb.Feature
 	mu            sync.Mutex // protects routeNotes
 	routeNotes    map[string][]*routeguidepb.RouteNote
+	chatCalls     int
 }
 
 func NewServer(filepath string) (*Server, error) {
 	s := &Server{}
 	s.savedFeatures = []*routeguidepb.Feature{}
 	s.routeNotes = map[string][]*routeguidepb.RouteNote{}
+	s.chatCalls = 0
 	err := s.loadFeatures(filepath)
 	return s, err
 }

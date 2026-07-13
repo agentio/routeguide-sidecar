@@ -15,6 +15,7 @@ import (
 // previous messages at each of those locations.
 func (s *Server) routeChat(ctx context.Context, stream *sidecar.BidiStream[routeguidepb.RouteNote, routeguidepb.RouteNote]) error {
 	log.Printf("%s", constants.RouteGuideRouteChatProcedure)
+	s.periodicallyResetRouteNotes()
 	for {
 		in, err := stream.Receive()
 		if err == io.EOF {
@@ -42,4 +43,15 @@ func (s *Server) routeChat(ctx context.Context, stream *sidecar.BidiStream[route
 
 func serialize(point *routeguidepb.Point) string {
 	return fmt.Sprintf("%d %d", point.Latitude, point.Longitude)
+}
+
+func (s *Server) periodicallyResetRouteNotes() {
+	s.mu.Lock()
+	if s.chatCalls == 4 {
+		clear(s.routeNotes)
+		s.chatCalls = 0
+	} else {
+		s.chatCalls++
+	}
+	s.mu.Unlock()
 }
