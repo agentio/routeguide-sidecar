@@ -157,8 +157,6 @@ func routeChat(ctx context.Context, stream *sidecar.BidiStream[routeguidepb.Rout
 	}
 }
 
-///
-
 // loadFeatures loads features from a JSON file.
 func loadFeatures(filePath string) {
 	var data []byte
