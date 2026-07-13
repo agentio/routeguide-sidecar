@@ -21,7 +21,7 @@ func printFeature(client *sidecar.Client, point *routeguidepb.Point) {
 		sidecar.NewRequest(point),
 	)
 	if err != nil {
-		log.Fatalf("client.GetFeature failed: %v", err)
+		log.Fatalf("client.GetFeature failed: %s", err)
 	}
 	log.Println(response.Msg)
 }

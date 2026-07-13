@@ -22,7 +22,7 @@ func printFeatures(client *sidecar.Client, rect *routeguidepb.Rectangle) {
 		sidecar.NewRequest(rect),
 	)
 	if err != nil {
-		log.Fatalf("client.ListFeatures failed: %v", err)
+		log.Fatalf("client.ListFeatures failed: %s", err)
 	}
 	for {
 		feature, err := stream.Receive()
@@ -30,7 +30,7 @@ func printFeatures(client *sidecar.Client, rect *routeguidepb.Rectangle) {
 			break
 		}
 		if err != nil {
-			log.Fatalf("client.ListFeatures failed: %v", err)
+			log.Fatalf("client.ListFeatures failed: %s", err)
 		}
 		log.Printf("Feature: name: %q, point:(%v, %v)", feature.GetName(),
 			feature.GetLocation().GetLatitude(), feature.GetLocation().GetLongitude())

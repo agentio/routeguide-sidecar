@@ -28,7 +28,7 @@ func runRouteChat(client *sidecar.Client) {
 		ctx, client, constants.RouteGuideRouteChatProcedure,
 	)
 	if err != nil {
-		log.Fatalf("client.RouteChat failed: %v", err)
+		log.Fatalf("client.RouteChat failed: %s", err)
 	}
 	waitc := make(chan struct{})
 	go func() {
@@ -40,16 +40,18 @@ func runRouteChat(client *sidecar.Client) {
 				return
 			}
 			if err != nil {
-				log.Fatalf("client.RouteChat failed: %v", err)
+				log.Fatalf("client.RouteChat failed: %s", err)
 			}
 			log.Printf("Got message %s at point(%d, %d)", in.Message, in.Location.Latitude, in.Location.Longitude)
 		}
 	}()
 	for _, note := range notes {
 		if err := stream.Send(note); err != nil {
-			log.Fatalf("client.RouteChat: stream.Send(%v) failed: %v", note, err)
+			log.Fatalf("client.RouteChat: stream.Send(%v) failed: %s", note, err)
 		}
 	}
-	stream.CloseRequest()
+	if err = stream.CloseRequest(); err != nil {
+		log.Fatalf("client.RouteChat CloseRequest failed: %s", err)
+	}
 	<-waitc
 }

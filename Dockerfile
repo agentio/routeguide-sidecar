@@ -5,7 +5,7 @@ RUN apt-get update
 RUN apt-get install unzip
 RUN ./tools/fetch-protoc.sh
 ENV PATH="/root/local/bin:${PATH}"
-RUN make rpc
+RUN make generated
 RUN CGO_ENABLED=0 GOOS=linux go build -v -o routeguide-sidecar .
 
 FROM gcr.io/distroless/static-debian13

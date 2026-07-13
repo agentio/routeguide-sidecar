@@ -20,9 +20,11 @@ func Cmd() *cobra.Command {
 		Short: "Run the routeguide server",
 		Args:  cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			apiServer := routeguide.NewServer(data)
+			apiServer, err := routeguide.NewServer(data)
+			if err != nil {
+				return err
+			}
 			httpServer := sidecar.NewServer(apiServer.ServeMux())
-			var err error
 			var listener net.Listener
 			if port == 0 {
 				listener, err = net.Listen("unix", socket)

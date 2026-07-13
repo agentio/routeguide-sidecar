@@ -18,12 +18,12 @@ type Server struct {
 	routeNotes    map[string][]*routeguidepb.RouteNote
 }
 
-func NewServer(filepath string) *Server {
+func NewServer(filepath string) (*Server, error) {
 	s := &Server{}
 	s.savedFeatures = []*routeguidepb.Feature{}
 	s.routeNotes = map[string][]*routeguidepb.RouteNote{}
-	s.loadFeatures(filepath)
-	return s
+	err := s.loadFeatures(filepath)
+	return s, err
 }
 
 //go:embed route_guide_db.json

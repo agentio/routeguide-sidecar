@@ -27,16 +27,16 @@ func runRecordRoute(client *sidecar.Client) {
 		ctx, client, constants.RouteGuideRecordRouteProcedure,
 	)
 	if err != nil {
-		log.Fatalf("client.RecordRoute failed: %v", err)
+		log.Fatalf("client.RecordRoute failed: %s", err)
 	}
 	for _, point := range points {
 		if err := stream.Send(point); err != nil {
-			log.Fatalf("client.RecordRoute: stream.Send(%v) failed: %v", point, err)
+			log.Fatalf("client.RecordRoute: stream.Send(%v) failed: %s", point, err)
 		}
 	}
 	reply, err := stream.CloseAndReceive()
 	if err != nil {
-		log.Fatalf("client.RecordRoute failed: %v", err)
+		log.Fatalf("client.RecordRoute failed: %s", err)
 	}
 	log.Printf("Route summary: %v", reply)
 }
