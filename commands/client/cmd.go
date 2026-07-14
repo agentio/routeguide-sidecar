@@ -34,7 +34,7 @@ func Cmd() *cobra.Command {
 		},
 	}
 	cmd.Flags().StringVarP(&message, "message", "m", "hello", "message")
-	cmd.Flags().StringVarP(&address, "address", "a", "unix:@echo", "address of the echo server to use")
+	cmd.Flags().StringVarP(&address, "address", "a", "unix:@routeguide", "address of the server to use")
 	cmd.Flags().BoolVarP(&insecure, "insecure", "i", false, "disable TLS certificate verification")
 	cmd.Flags().StringArrayVarP(&headers, "header", "H", []string{}, "headers to add to the request")
 	return cmd
