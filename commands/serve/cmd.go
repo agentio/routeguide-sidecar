@@ -1,4 +1,4 @@
-// Package serve implements an Echo server.
+// Package serve implements a Route Guide server.
 package serve
 
 import (
